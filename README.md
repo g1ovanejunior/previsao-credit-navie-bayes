@@ -28,17 +28,17 @@ Geralmente, modelos ingênuos ou dados sem tratamento tendem a classificar a mai
 
 ### 1. Modelo Baseline (Sem Análise Detalhada)
 No primeiro notebook (`parte1_sem_análise.ipynb`):
-- Os dados foram carregados e codificados com `LabelEncoder` para transformar atributos categóricos em numéricos[cite: 1].
-- A base foi dividida em **70% para treino** e **30% para teste** (`train_test_split`)[cite: 1].
-- O algoritmo **Gaussian Naive Bayes** foi treinado diretamente[cite: 1].
-- **Resultado:** A acurácia obtida foi de **71%**[cite: 1]. No entanto, o modelo apresentou baixo poder de captura de maus pagadores (Recall para a classe `bad` de apenas 48%)[cite: 1].
+- Os dados foram carregados e codificados com `LabelEncoder` para transformar atributos categóricos em numéricos.
+- A base foi dividida em **70% para treino** e **30% para teste** (`train_test_split`).
+- O algoritmo **Gaussian Naive Bayes** foi treinado diretamente.
+- **Resultado:** A acurácia obtida foi de **71%**. No entanto, o modelo apresentou baixo poder de captura de maus pagadores (Recall para a classe `bad` de apenas 48%).
 
 ### 2. Pipeline com Análise Exploratória e Engenharia de Dados
 No segundo notebook (`parte2_com_analise.ipynb`):
-- **Análise de Relevância Categórica (Teste Qui-Quadrado):** Avaliou-se o p-valor das variáveis categóricas em relação à classe alvo. Colunas com p-valor > 0.05 (como `job` e `own_telephone`) foram removidas por não apresentarem relevância estatística[cite: 2].
-- **Informação Mútua (Mutual Information):** Identificação e remoção de atributos com score nulo em relação à variável alvo (`installment_commitment`, `residence_since`, `existing_credits`)[cite: 2].
-- **Tratamento de Assimetria (Yeo-Johnson):** Aplicação do `PowerTransformer` para corrigir a assimetria das variáveis numéricas (`duration`, `credit_amount`, `age`), aproximando-as de uma distribuição normal e adequando-as às premissas do Gaussian Naive Bayes[cite: 2].
-- **One-Hot Encoding:** Codificação das variáveis categóricas restantes para evitar ordenação arbitrária[cite: 2].
+- **Análise de Relevância Categórica (Teste Qui-Quadrado):** Avaliou-se o p-valor das variáveis categóricas em relação à classe alvo. Colunas com p-valor > 0.05 (como `job` e `own_telephone`) foram removidas por não apresentarem relevância estatística.
+- **Informação Mútua (Mutual Information):** Identificação e remoção de atributos com score nulo em relação à variável alvo (`installment_commitment`, `residence_since`, `existing_credits`).
+- **Tratamento de Assimetria (Yeo-Johnson):** Aplicação do `PowerTransformer` para corrigir a assimetria das variáveis numéricas (`duration`, `credit_amount`, `age`), aproximando-as de uma distribuição normal e adequando-as às premissas do Gaussian Naive Bayes.
+- **One-Hot Encoding:** Codificação das variáveis categóricas restantes para evitar ordenação arbitrária.
 
 ---
 
@@ -62,8 +62,8 @@ Para complementar a análise técnica e fornecer uma visão executiva para tomad
 
 | Métrico / Módulo | Modelo Sem Tratamento (Parte 1) | Modelo Com Análise (Parte 2) |
 | :--- | :---: | :---: |
-| **Acurácia Geral** | 71%[cite: 1] | *Avaliada após pipeline ajustado* |
-| **Identificação de Maus Pagadores (`bad`)** | Baixa precisão e cobertura[cite: 1] | **Melhoria significativa na detecção** |
+| **Acurácia Geral** | 71% | *Avaliada após pipeline ajustado* |
+| **Identificação de Maus Pagadores (`bad`)** | Baixa precisão e cobertura | **Melhoria significativa na detecção** |
 
 A principal conclusão do projeto foi demonstrar que métricas genéricas como a acurácia isolada podem mascarar riscos. Ao tratar adequadamente as distribuições e aplicar seleção criteriosa de atributos, o modelo passou a identificar com maior precisão os clientes de alto risco, cumprindo o papel estratégico de suporte à decisão de concessão de crédito.
 
@@ -71,11 +71,11 @@ A principal conclusão do projeto foi demonstrar que métricas genéricas como a
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Linguagem:** Python[cite: 1, 2]
-- **Manipulação de Dados:** Pandas[cite: 1, 2]
-- **Estatística e Machine Learning:** Scikit-Learn (`GaussianNB`, `PowerTransformer`, `mutual_info_classif`)[cite: 1, 2], SciPy (`chi2_contingency`)[cite: 2]
-- **Visualização de Dados:** Matplotlib[cite: 2], Yellowbrick[cite: 1, 2], Power BI
-- **Ambiente:** Jupyter Notebook / VS Code[cite: 1, 2]
+- **Linguagem:** Python
+- **Manipulação de Dados:** Pandas
+- **Estatística e Machine Learning:** Scikit-Learn (`GaussianNB`, `PowerTransformer`, `mutual_info_classif`), SciPy (`chi2_contingency`)
+- **Visualização de Dados:** Matplotlib, Yellowbrick, Power BI
+- **Ambiente:** Jupyter Notebook / VS Code
 
 ---
 
