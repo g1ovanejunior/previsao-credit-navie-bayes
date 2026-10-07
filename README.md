@@ -60,13 +60,42 @@ Para complementar a análise técnica e fornecer uma visão executiva para tomad
 
 ## 📈 Resultados e Comparação de Modelos
 
-| Métrico / Módulo | Modelo Sem Tratamento (Parte 1) | Modelo Com Análise (Parte 2) |
-| :--- | :---: | :---: |
-| **Acurácia Geral** | 71% | *Avaliada após pipeline ajustado* |
-| **Identificação de Maus Pagadores (`bad`)** | Baixa precisão e cobertura | **Melhoria significativa na detecção** |
 
-A principal conclusão do projeto foi demonstrar que métricas genéricas como a acurácia isolada podem mascarar riscos. Ao tratar adequadamente as distribuições e aplicar seleção criteriosa de atributos, o modelo passou a identificar com maior precisão os clientes de alto risco, cumprindo o papel estratégico de suporte à decisão de concessão de crédito.
+Abaixo está a comparação detalhada do modelo **Gaussian Naive Bayes** aplicado antes e depois das etapas de Análise Exploratória de Dados (EDA), tratamento de assimetria (*skewness*) e transformações de atributos.
 
+---
+
+### 1. Matrizes de Confusão
+
+| Modelo | Matriz de Confusão |
+| :--- | :--- |
+| **Parte 1: Sem Análise Exploratória** | <table><tr><th></th><th>Pred. Bad</th><th>Pred. Good</th></tr><tr><th>True Bad</th><td><b>41</b> (VP)</td><td>45 (FN)</td></tr><tr><th>True Good</th><td>42 (FP)</td><td><b>172</b> (VN)</td></tr></table> |
+| **Parte 2: Com Análise Exploratória** | <table><tr><th></th><th>Pred. Bad</th><th>Pred. Good</th></tr><tr><th>True Bad</th><td><b>60</b> (VP)</td><td>30 (FN)</td></tr><tr><th>True Good</th><td>92 (FP)</td><td><b>118</b> (VN)</td></tr></table> |
+
+---
+
+### 2. Tabela Comparativa de Métricas
+
+| Métrica | Sem Análise (Parte 1) | Com Análise (Parte 2) | Variação / Impacto |
+| :--- | :---: | :---: | :--- |
+| **Acurácia Geral** | **71.00%** | 59.33% | 📉 -11.67% *(Ilusória devido ao desbalanceamento)* |
+| **Sensibilidade / Recall (`bad`)** | 47.67% | **66.67%** | 📈 **+19.00%** *(Aumento expressivo na detecção de risco)* |
+| **Falsos Negativos (`bad` aprovado)** | 45 | **30** | 📉 **-15 maus pagadores aprovados erroneamente** |
+| **Precisão (`bad`)** | 49.40% | 39.47% | 📉 -9.93% |
+| **F1-Score (`bad`)** | 0.4852 | **0.4959** | 📈 +0.0107 *(Melhor equilíbrio para a classe minoritária)* |
+
+---
+
+### 3. Análise dos Resultados e Conclusão de Negócio
+
+* **Redução do Risco de Crédito (Falsos Negativos):**
+  Sem a análise exploratória, o modelo deixava passar **45 maus pagadores** como se fossem bons clientes (taxa de erro de 52,3% na classe `bad`). Após o tratamento dos dados, o modelo reduziu essa falha para **30 maus pagadores**, aumentando a capacidade de captura de risco (**Recall**) de **47,67% para 66,67%**.
+
+* **Entendendo a Queda na Acurácia Geral:**
+  A acurácia geral caiu de 71,00% para 59,33% porque o modelo tornou-se mais conservador, classificando mais clientes como `bad` (gerando mais Falsos Positivos: 92 vs 42). Em problemas de risco de crédito altamente desbalanceados, a acurácia isolada é uma métrica enganosa (*accuracy paradox*), enquanto a **Sensibilidade (Recall)** sobre a classe de risco é a métrica mais crítica para a instituição financeira.
+
+* **Conclusão:**
+  A etapa de tratamento de dados e Análise Exploratória ajustou as distribuições para atender melhor às premissas do **Gaussian Naive Bayes**, resultando em um modelo significativamente mais seguro e alinhado aos objetivos reais de mitigação de prejuízos financeiros.
 ---
 
 ## 🛠️ Tecnologias Utilizadas
